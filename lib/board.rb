@@ -77,9 +77,6 @@ class Board
         # betting_players.each {|player| player.current_bet = 0}
         # @minimum_bet = 0
 
-        puts "main pot is #{@main_pot}"
-        puts "--------------end of preflop--------------------"
-
         # 3. post-flop
         print "\33c\e[3J"
 
@@ -99,8 +96,6 @@ class Board
         end
 
         while self.active_players.length > 1 && @flop.length < 5
-            puts "bb"
-            sleep(2)
             play_postflop_turn
             if @players.any? {|player| player.all_in == true} && self.active_players.length > 1
                 while @flop.length < 5
