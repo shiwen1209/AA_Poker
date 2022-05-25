@@ -99,12 +99,24 @@ class Board
             play_postflop_turn
             if @players.any? {|player| player.all_in == true} && self.active_players.length > 1
                 while @flop.length < 5
+                    print "\33c\e[3J"
+                    puts "Flipping Flop! Press enter to continue"
+                    gets 
+                    print "\33c\e[3J"
                     print_flop
                     deal_flop(reserve_cards)
+                    print_flop
+                    sleep(1.5)
                 end
             else
+                print "\33c\e[3J"
+                puts "Flipping Flop! Press enter to continue"
+                gets 
+                print "\33c\e[3J"
                 print_flop
                 deal_flop(reserve_cards)
+                print_flop
+                sleep(1.5)
             end
         end
         sleep(5)
