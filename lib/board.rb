@@ -4,7 +4,7 @@ require_relative "hand.rb"
 require_relative "deck.rb"
 require "colorize"
 
-class Board 
+class Board
 
     LEGEND = [nil, 'Single'.colorize(:blue), 'Single Pair'.colorize(:cyan), 'Double Pair'.colorize(:cyan), 'Three-of-a-Kind'.colorize(:green), 'Straight'.colorize(:yellow), 'Flush'.colorize(:yellow), 'Full House'.colorize(:yellow), 'Four-of-a-Kind'.colorize(:yellow), 'Straight Flush'.colorize(:red), 'Royal Flush'.colorize(:red)]
 
@@ -368,7 +368,7 @@ class Board
 
         elsif best_player.length > 1
             if best_player.length == 2
-                puts "#{best_player[0].name} and #{best_player[0].name} split the pot for $#{@main_pot/2} each!".center(88)
+                puts "#{best_player[0].name} and #{best_player[1].name} split the pot for $#{@main_pot/2} each!".center(88)
                 puts
 
                 best_player.each do |player|
@@ -391,7 +391,8 @@ class Board
         else
             raise StandardError.new("Shouldn't have no best player")
         end
-        sleep(10)
+        sleep(4)
+        gets
     end
 
     def print_flop
@@ -504,7 +505,10 @@ class Board
             puts line
         end
 
-        sleep(5)
+        sleep(3)
+        puts ""
+        puts "Autosaving game..."
+        sleep(2)
 
     end
 
