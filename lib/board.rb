@@ -395,7 +395,7 @@ class Board
         testme = "Press anything to continue..."
         puts ""
         puts "\e[3m#{testme}\e[23m".center(88)
-        sleep(.5)
+        sleep(0.5)
         gets
     end
 
