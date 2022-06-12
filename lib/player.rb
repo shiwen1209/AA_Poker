@@ -1,6 +1,7 @@
 # require_relative "board.rb"
 require_relative "hand.rb"
 require "colorize"
+require 'bcrypt'
 
 class Player 
 
@@ -33,7 +34,8 @@ class Player
             puts "#{@name}, please enter your password: "
             passw = gets.chomp
 
-            if passw == @password
+            # if passw == @password
+            if BCrypt::Password.new(@password).is_password?(passw)
                 print "\33c\e[3J"
                 puts "The Flop".center(60) + "   " "Total Chips".center(24)
                 bf = Array.new(9, "") 

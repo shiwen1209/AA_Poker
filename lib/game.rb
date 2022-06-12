@@ -12,6 +12,9 @@ class Game
         if (inp == "n" || inp[0..2] == "new")
             puts "Please enter the name of the file you'd like to save to"
             @myfilename = gets.chomp
+            if (@myfilename.length < 6 || @myfilename[-5..-1] != ".yaml")
+                @myfilename += ".yaml"
+            end
             if(File.exists?("games/" + @myfilename))
                 raise IOError.new("File Already exists")
             end
@@ -19,13 +22,22 @@ class Game
         elsif (inp == "l" || inp[0..3] == "load")
             puts "Please enter the file name you'd like to load: "
             file_name = gets.chomp
+            if (file_name.length < 6 || file_name[-5..-1] != ".yaml")
+                file_name += ".yaml"
+            end
             f = File.read("games/" + file_name)
             @board = YAML::load(f)
             @num_players = @board.num_players
-
+            print "\33c\e[3J"
+            puts "LOADING..."
+            sleep(0.8)
+            print "\33c\e[3J"
+            puts "Game has successfully loaded!"
+            sleep(1.7)
             play
         else
             puts "Please enter valid option next time..."
+            exit
         end
     end
 
@@ -56,7 +68,9 @@ class Game
             puts "Please enter a short password"
             passw = gets.chomp
             puts "that's not short lol hope u can remember that" if passw.length > 5
-            player = Player.new(p_name, passw, @board, earnings)
+            print "\33c\e[3J"
+            encrypted_pass = BCrypt::Password.create(passw)
+            player = Player.new(p_name, encrypted_pass, @board, earnings)
             # @players << player
             @board.players << player
             

@@ -391,7 +391,11 @@ class Board
         else
             raise StandardError.new("Shouldn't have no best player")
         end
-        sleep(4)
+        sleep(3)
+        testme = "Press anything to continue..."
+        puts ""
+        puts "\e[3m#{testme}\e[23m".center(88)
+        sleep(.5)
         gets
     end
 

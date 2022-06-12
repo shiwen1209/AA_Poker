@@ -76,14 +76,30 @@
 
 # # end
 
-(0..100).each do |i|
-    p i
-    sleep(0.01)
-    print "\33c\e[3J"
-end
+# (0..100).each do |i|
+#     p i
+#     sleep(0.01)
+#     print "\33c\e[3J"
+# end
 
-(0..20).each do |i|
-    p i
-    sleep(0.05)
-    print "\33c\e[3J"
-end
+# (0..20).each do |i|
+#     p i
+#     sleep(0.05)
+#     print "\33c\e[3J"
+# end
+###
+# require 'bcrypt'
+
+# puts "please enter a password"
+# inp = gets.chomp
+# a = BCrypt::Password.create(inp)
+# puts a
+# puts ""
+
+# puts "please enter your password"
+# password = gets.chomp
+# puts BCrypt::Password.new(a).is_password?(password)
+###
+
+testme = "abc"
+puts "\e[3m#{testme}\e[23m"
