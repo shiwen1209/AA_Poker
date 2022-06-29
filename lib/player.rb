@@ -17,7 +17,7 @@ class Player
         @big_blind = false #reset for each round 
         @active = true #reset for each round
         @all_in = false # reset for each round 
-        @current_bet = 0 #keeps track of current bet in a turn #reset for each turn
+        @current_bet = @board.start_bet #keeps track of current bet in a turn #reset for each turn
     end
 
     def reset
@@ -25,7 +25,7 @@ class Player
         @big_blind = false
         @active = true
         @all_in = false
-        @current_bet = 0
+        @current_bet = @board.start_bet
     end
 
     def get_move
@@ -190,6 +190,7 @@ class Player
                     puts "Please enter the amount you'd like to raise to, or -1 if you want to change your mind: "
                     num = gets.chomp
                     raise StandardError.new("User requested to attempt other command") if num.to_i < 0
+
                 end
                 num = num.to_i
                 self.raiseto(num)
@@ -247,11 +248,13 @@ class Player
     end
 
     def raiseto(num)
-        raise StandardError.new("did not enter a valid number to raise to") if num == nil
+        
+        raise StandardError.new("You did not enter a valid number to raise to!") if num == nil
         bet = num - @current_bet
-        raise StandardError.new("your bet is lower than the current bet of #{@board.minimum_bet}!") if bet < @board.minimum_bet #?
-        raise StandardError.new("you dont have enough money") if bet >= @chips
-        raise StandardError.new("you cannot raise") if @board.minimum_bet <= 0 
+        raise StandardError.new("Bet must be a multiple of 5") if bet % 5 != 0
+        raise StandardError.new("Your bet must be greater than the minimum bet of #{@board.minimum_bet}!") if bet < @board.minimum_bet#?
+        raise StandardError.new("You're broke lol") if bet >= @chips
+        raise StandardError.new("You cannot raise") if @board.minimum_bet <= 0 
         @board.main_pot += bet
         @current_bet += bet
         @chips -= bet

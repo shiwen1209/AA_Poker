@@ -42,6 +42,12 @@ class Game
     end
 
     def start
+        puts "How much does each player start with? Please enter a multiple of 10, and at least 500"
+        @starting_money = gets.chomp.to_i
+        if @starting_money < 500
+            @starting_money = 1000 #default to 1000, maybe 500 makes more sense but w/e
+        end
+
         puts "How many players are playing?"
         @num_players = gets.chomp.to_i
         if num_players > 8 || num_players < 2
@@ -61,9 +67,9 @@ class Game
             p_name = gets.chomp
             p_name = p_name[0..11] if p_name.length > 12
             if p_name[0..1].downcase == "da" || p_name[0..3].downcase == "will" || p_name[0..6].downcase == "william" || p_name.downcase[0..6] == "frinxor"
-                earnings = 500
+                earnings = @starting_money / 2
             else
-                earnings = 1000
+                earnings = @starting_money
             end
             puts "Please enter a short password"
             passw = gets.chomp

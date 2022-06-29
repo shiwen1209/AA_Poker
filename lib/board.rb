@@ -24,7 +24,7 @@ class Board
         @deck = Deck.new
         @big_blind_index = -1
         # @current_player_index = 1
-        @start_bet = 20 # keeps track of minimum start bet for the blind
+        @start_bet = 10 # keeps track of minimum start bet for the blind
         @minimum_bet = @start_bet # keeps track of minimum bet player needs to match in order to stay in the game
         @main_pot = 0 #keeps track of of size of the pot in a round
         # @side_pots = [] #used when more than 1 person goes all in and their all-ins are different
