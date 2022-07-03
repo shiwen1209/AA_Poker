@@ -17,7 +17,7 @@ class Player
         @big_blind = false #reset for each round 
         @active = true #reset for each round
         @all_in = false # reset for each round 
-        @current_bet = @board.start_bet #keeps track of current bet in a turn #reset for each turn
+        @current_bet = 0 #keeps track of current bet in a turn #reset for each turn
     end
 
     def reset
@@ -25,7 +25,7 @@ class Player
         @big_blind = false
         @active = true
         @all_in = false
-        @current_bet = @board.start_bet
+        @current_bet = 0
     end
 
     def get_move
@@ -250,15 +250,18 @@ class Player
     def raiseto(num)
         
         raise StandardError.new("You did not enter a valid number to raise to!") if num == nil
-        bet = num - @current_bet
-        raise StandardError.new("Bet must be a multiple of 5") if bet % 5 != 0
-        raise StandardError.new("Your bet must be greater than the minimum bet of #{@board.minimum_bet}!") if bet < @board.minimum_bet#?
-        raise StandardError.new("You're broke lol") if bet >= @chips
+        raise_amount = num - @current_bet
+        if raise_amount % @board.minimum_raise != 0
+            raise StandardError.new("You must raise the multiples of #{@board.minimum_raise}") 
+        end
+        # raise StandardError.new("Your raise amount must be greater than the minimum raise amount of #{@board.minimum_bet}!") if raise_amount < @board.minimum_bet#?
+        raise StandardError.new("You're broke lol") if raise_amount >= @chips
         raise StandardError.new("You cannot raise") if @board.minimum_bet <= 0 
-        @board.main_pot += bet
-        @current_bet += bet
-        @chips -= bet
+        @board.main_pot += raise_amount
+        @current_bet += raise_amount
+        @chips -= raise_amount
         @board.minimum_bet = num
+        @board.minimum_raise = raise_amount
         @board.count = 1 # reset the board count to 1 when someone raises
     end
 
@@ -273,22 +276,11 @@ class Player
     end
 
     def fold
-        # player become inactiv
-        # player forego their hands
         self.active = false
         self.current_bet = 0
     end
 
-    # def blind_move
-    #     if @chips < @board.start_bet
-    #         self.go_all_in
-    #     else 
-    #         @board.main_pot += @board.start_bet
-    #         @current_bet += @board.start_bet
-    #         @chips -= @board.start_bet
-    #         get_move
-    #     end
-    # end
+
 
     private
     attr_accessor :password
