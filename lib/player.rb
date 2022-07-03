@@ -250,16 +250,17 @@ class Player
     def raiseto(num)
         
         raise StandardError.new("You did not enter a valid number to raise to!") if num == nil
-        raise_amount = num - @current_bet
-        if raise_amount % @board.minimum_raise != 0
+        bet = num - @current_bet
+        raise_amount = num - @board.minimum_bet
+        if raise_amount % @board.minimum_raise != 0 || raise_amount <= 0
             raise StandardError.new("You must raise the multiples of #{@board.minimum_raise}") 
         end
-        # raise StandardError.new("Your raise amount must be greater than the minimum raise amount of #{@board.minimum_bet}!") if raise_amount < @board.minimum_bet#?
-        raise StandardError.new("You're broke lol") if raise_amount >= @chips
+        # raise StandardError.new("Your raise amount must be greater than the minimum raise amount of #{@board.minimum_bet}!") if bet < @board.minimum_bet#?
+        raise StandardError.new("You're broke lol") if bet >= @chips
         raise StandardError.new("You cannot raise") if @board.minimum_bet <= 0 
-        @board.main_pot += raise_amount
-        @current_bet += raise_amount
-        @chips -= raise_amount
+        @board.main_pot += bet
+        @current_bet += bet
+        @chips -= bet
         @board.minimum_bet = num
         @board.minimum_raise = raise_amount
         @board.count = 1 # reset the board count to 1 when someone raises

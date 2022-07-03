@@ -14,7 +14,7 @@ class Board
     # when does a turn end
         # everyone but one person folds
         # more than two people stick to the end reveal cards at showdown
-    attr_accessor :flop, :big_blind_index, :start_bet, :minimum_bet, :count, :players, :main_pot, :dead_players
+    attr_accessor :flop, :big_blind_index, :start_bet, :minimum_bet, :minimum_raise, :count, :players, :main_pot, :dead_players
     attr_reader :num_players, :deck
 
     def initialize(num_players)
@@ -521,4 +521,4 @@ end
 
 
 board = Board.new(2);
-p board.flop
+p board.minimum_raise
